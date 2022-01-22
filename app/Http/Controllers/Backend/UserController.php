@@ -23,11 +23,14 @@ class UserController extends Controller
 
     public function UserStore(UserRequest $request){
         $data=$request->except(['_token','_method']);
+        $code = rand(0000,9999);
           User::create([
-            "usertype" => $data["usertype"],
+            "usertype" => 'Admin',
             "name" => $data["name"],
             "email" => $data["email"],
-            "password" =>  Hash::make($request->password)
+            'role'=>$data['role'],
+            'code'=>$code,
+            "password" =>  Hash::make($code)
         ]);
         $notification = array(
             'message' => 'User Inserted Successfully',
